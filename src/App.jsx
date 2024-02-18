@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import bookLogo from './assets/books.png'
-import './App.css'
 import Navigations from './components/Navigations'
 
 function App() {
   const [token, setToken] = useState(null)
+  
 
   return (
     <>
