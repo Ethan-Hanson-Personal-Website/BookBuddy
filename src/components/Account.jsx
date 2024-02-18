@@ -3,5 +3,5 @@ import { useState, useEffect } from 'react'
 import { getMe } from '../apis/api'
 import { Link } from 'react-router-dom'
 
-function Account() {
+export default function Account() {
 }

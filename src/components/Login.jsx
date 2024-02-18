@@ -3,5 +3,5 @@ import { useState } from 'react'
 import { loginUser } from '../apis/api'
 import { useHistory } from 'react-router-dom'
 
-function Login() {
+export default function Login() {
 }

@@ -3,5 +3,5 @@ import { useState, useEffect } from 'react'
 import { getBook } from '../apis/api'
 import { Link } from 'react-router-dom'
 
-function SingleBook() {
+export default function SingleBook() {
 }

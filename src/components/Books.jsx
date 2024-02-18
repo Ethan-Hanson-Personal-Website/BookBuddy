@@ -3,5 +3,23 @@ import { useState, useEffect } from 'react'
 import { getBooks } from '../apis/api'
 import { Link } from 'react-router-dom'
 
-function Books() {
+export default function Books() {
+    const [books, setBooks] = useState([])
+    useEffect(() => {
+        getBooks()
+        .then(books => setBooks(books))
+    }, [])
+    return (
+        <div>
+        <h1>Books</h1>
+        <ul>
+            {books.map(book => (
+            <li key={book.id}>
+                <Link to={`/books/${book.id}`}>{book.title}</Link>
+            </li>
+            ))}
+        </ul>
+        </div>
+    )
 }
+
