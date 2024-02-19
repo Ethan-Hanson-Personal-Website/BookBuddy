@@ -7,56 +7,30 @@ import { patchBook } from "../apis/api.js";
 import { getme } from "../apis/api.js";
 
 export default function SingleBook() {
-  const [book, setBook] = useState({});
-  const [token, setToken] = useState("");
-  const [user, setUser] = useState({});
-  const [error, setError] = useState("");
-  const { id } = useParams();
+ const { id } = useParams();
+    const [book, setBook] = useState([]);
+    const [registered, setRegistered] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getSinglebook(id);
-      setBook(data);
-    };
-    fetchData();
-  }, [id]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getSinglebook(id);
+                setBook(data.books);
+            } catch (error) {
+                console.error("Error fetching book:", error);
+            }
+        };
+        fetchData();
+    }, [id]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setToken(token);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getme(token);
-      setUser(data);
-    };
-    fetchData();
-  }, [token]);
-
-  const handleCheckout = async () => {
-    const data = await patchBook(id, token);
-    if (data.success) {
-      setError("");
-      setBook(data.book);
-    } else {
-      setError("Checkout failed. Please try again.");
-    }
-  };
-
-  return (
-    <div>
-      <h2>{book.title}</h2>
-      <p>By {book.author}</p>
-      <p>Description: {book.description}</p>
-      <img src={book.coverimage} alt={book.title} />
-      {book.available ? (
-        <button onClick={handleCheckout}>Checkout</button>
-      ) : (
-        <p>Not available</p>
-      )}
-      {error && <p>{error}</p>}
-      <Link to="/books">Back to all books</Link>
-    </div>
-  );
+    return (
+        <div>
+            <h2>{book.title}</h2>
+            <p>By {book.author}</p>
+            <p> description: {book.description}</p>
+            <img src={book.coverimage} alt={book.title} />
+            <p>Available: {book.available ? "Yes" : "No"}</p>
+            <Link to={`/books/${id}/checkout`}>Checkout</Link>
+        </div>
+    );
 }
