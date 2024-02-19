@@ -19,7 +19,7 @@ export async function getSinglebook(bookId) {
     try {
         const response = await fetch(`${BOOKAPI}/${bookId}`);
         const data = await response.json();
-        return data;
+        return data.books;
     } catch (error) {
         console.error("Error fetching books:", error);
     }
