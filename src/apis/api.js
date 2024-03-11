@@ -23,7 +23,8 @@ export async function getSinglebook(id) {
     } catch (error) {
         console.error("Error fetching single book:", error);
     }
-   }
+}
+
 
 //need to make a function to patch a book on bookapi/:id so Any registered user can update (checkout or return) a book. You must pass a valid token with this request, or it will be rejected.
 export async function patchBook(id, available) {
