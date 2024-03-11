@@ -8,13 +8,13 @@ export default function Singlebook() {
     const [book, setBook] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        async function fetchSinglebook() {
-            const data = await getSinglebook(id);
-            setBook(data);
-        }
-        fetchSinglebook();
-    }, [id]);
+   useEffect(() => {
+    async function fetchSinglebook() {
+        const data = await getSinglebook(id);
+        setBook(data);
+    }
+    fetchSinglebook();
+}, [id]);
 
     const handleCheckout = async () => {
         const updatedBook = { ...book, available: false };

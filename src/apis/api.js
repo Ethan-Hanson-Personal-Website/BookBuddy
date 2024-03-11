@@ -16,13 +16,17 @@ export async function getBooks() {
 
 //need to make a function to fetch a single book from bookapi/:id it should return a single book
 export async function getSinglebook(id) {
-    try {
-        const response = await fetch(`${BOOKAPI}/${id}`);
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("Error fetching single book:", error);
+    const response = await fetch(`/api/books/${id}`, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    return await response.json();
 }
 
 
