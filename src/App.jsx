@@ -2,7 +2,6 @@
 
 import Navigations from './components/Navigations'
 import { Routes, Route } from 'react-router-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
 import Books from './components/Books';
 import Singlebook from './components/Singlebook';
 import Login from './components/Login';
@@ -12,7 +11,7 @@ import './App.css'
 
 function App() {
   return (
-    <Router>
+    <div>
       <Navigations />
       <Routes>
         <Route path="/" element={<Books />} />
@@ -22,7 +21,7 @@ function App() {
         <Route path="/books/:id" element={<Singlebook />} />
         <Route path="/account" element={<Account />} />
       </Routes>
-    </Router>
+    </div>
   )
 }
 
