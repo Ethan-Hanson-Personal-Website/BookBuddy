@@ -2,11 +2,13 @@
 import React, { useState } from 'react';
 import { loginUser } from '../apis/api.js';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom"
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -16,7 +18,7 @@ export default function Login() {
                 setError(data.error);
             } else {
                 localStorage.setItem('token', data.token);
-                window.location = '/';
+                navigate('/');
             }
         } catch (error) {
             setError('Invalid email or password');

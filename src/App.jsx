@@ -1,5 +1,4 @@
 //TODO This is the main app function
-
 import Navigations from './components/Navigations'
 import { Routes, Route } from 'react-router-dom'
 import Books from './components/Books';
@@ -25,4 +24,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

@@ -41,7 +41,6 @@ return (
         <div>
           <figure>
             <img
-              className={styles.img}
               src={book.coverimage}
               alt="A pic of a book"
             />
