@@ -1,72 +1,51 @@
 /* TODO - add your code to create a functional React component that renders account details for a logged in user. Fetch the account data from the provided API. You may consider conditionally rendering a message for other users that prompts them to log in or create an account.  */
-import { useState, useEffect } from 'react'
-import { getme } from '../apis/api.js'
-import { Link } from 'react-router-dom'
-import { getReservations } from '../apis/api.js'
-import { deleteReservation } from '../apis/api.js'
+import React, { useState, useEffect } from 'react';
+import { getme, getReservations, deleteReservation } from '../apis/api';
+import { Link } from 'react-router-dom';
 
 export default function Account() {
-    const [user, setUser] = useState({})
-    const [token, setToken] = useState('')
-    const [error, setError] = useState('')
-    const [reservations, setReservations] = useState([])
+    const [user, setUser] = useState({});
+    const [reservations, setReservations] = useState([]);
+    const [error, setError] = useState('');
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
-        setToken(token)
-    }, [])
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getme(token)
-            setUser(data)
+        async function fetchUser() {
+            const data = await getme(localStorage.getItem('token'));
+            setUser(data);
         }
-        fetchData()
-    }, [token])
+        fetchUser();
+    }, []);
 
     useEffect(() => {
-        const fetchReservations = async () => {
-            const data = await getReservations(token)
-            setReservations(data)
+        async function fetchReservations() {
+            const data = await getReservations(localStorage.getItem('token'));
+            setReservations(data);
         }
-        fetchReservations()
-    }, [token])
+        fetchReservations();
+    }, []);
 
-    const handleDeleteReservation = async (id) => {
-        const data = await deleteReservation(id, token)
-        if (data.success) {
-            setError('')
-            const newReservations = reservations.filter(reservation => reservation.id !== id)
-            setReservations(newReservations)
+    const handleReturn = async (reservationId) => {
+        const data = await deleteReservation(reservationId);
+        if (data.error) {
+            setError(data.error);
         } else {
-            setError('Delete failed. Please try again.')
+            const updatedReservations = reservations.filter(reservation => reservation.id !== reservationId);
+            setReservations(updatedReservations);
         }
     }
 
     return (
         <div>
-            {user.id ? (
-                <div>
-                    <h2>{user.firstName} {user.lastName}</h2>
-                    <p>Email: {user.email}</p>
-                    <h3>Your Reservations</h3>
-                    {reservations.length > 0 ? (
-                        <ul>
-                            {reservations.map(reservation => (
-                                <li key={reservation.id}>
-                                    <p>{reservation.book.title} by {reservation.book.author}</p>
-                                    <button onClick={() => handleDeleteReservation(reservation.id)}>Delete</button>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>You have no reservations.</p>
-                    )}
+            <h2>{user.firstname}'s Account</h2>
+            <p>Email: {user.email}</p>
+            <h3>Checked Out Books</h3>
+            {reservations.map(reservation => (
+                <div key={reservation.id}>
+                    <p>{reservation.book.title}</p>
+                    <button onClick={() => handleReturn(reservation.id)}>Return</button>
                 </div>
-            ) : (
-                <p>Please <Link to='/login'>login</Link> or <Link to='/register'>register</Link> to view your account.</p>
-            )}
+            ))}
             {error && <p>{error}</p>}
         </div>
-    )
+    );
 }

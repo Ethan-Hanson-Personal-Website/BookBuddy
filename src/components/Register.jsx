@@ -1,32 +1,30 @@
 /* TODO - add your code to create a functional React component that renders a registration form */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { registerUser } from '../apis/api.js';
 import { Link } from 'react-router-dom';
-//import { getme } from '../apis/api.js';
-
 
 export default function Register() {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [token, setToken] = useState('');
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = await registerUser(firstname, lastname, email, password);
-        if (data.token) {
-            setToken(data.token);
+        if (data.error) {
+            setError(data.error);
         } else {
-            setError('Registration failed. Please try again.');
+            setSuccess('Registration successful! Please log in.');
         }
     }
 
     return (
         <div>
-            {token ? (
-                <p>Registration successful! You can now <Link to='/books'>view books</Link>.</p>
+            {success ? (
+                <p>{success} <Link to='/login'>Login</Link></p>
             ) : (
                 <form onSubmit={handleSubmit}>
                     <input type='text' value={firstname} onChange={e => setFirstname(e.target.value)} placeholder='First Name' />
