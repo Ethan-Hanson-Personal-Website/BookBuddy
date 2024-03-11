@@ -14,20 +14,20 @@ export async function getBooks() {
     }
 }
 
-//need to make a function to fetch a single book from bookapi
-export async function getSinglebook(bookId) {
+//need to make a function to fetch a single book from bookapi/:id it should return a single book
+export async function getSinglebook(id) {
     try {
-        const response = await fetch(`${BOOKAPI}/${bookId}`);
+        const response = await fetch(`${BOOKAPI}/${id}`);
         const data = await response.json();
-        return data.books;
+        return data;
     } catch (error) {
-        console.error("Error fetching books:", error);
+        console.error("Error fetching single book:", error);
     }
-}
+   }
 
 //need to make a function to patch a book on bookapi/:id so Any registered user can update (checkout or return) a book. You must pass a valid token with this request, or it will be rejected.
-export async function patchBook(bookId, available) {
-    const response = await fetch(`${BOOKAPI}/${bookId}`, {
+export async function patchBook(id, available) {
+    const response = await fetch(`${BOOKAPI}/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -38,7 +38,6 @@ export async function patchBook(bookId, available) {
     const data = await response.json();
     return data;
 }
-
 
 //need to make a function to post on userapi/register
 export async function registerUser(firstname, lastname, email, password) {
@@ -57,18 +56,24 @@ export async function registerUser(firstname, lastname, email, password) {
     }
 }
 
-//pull token from api and use it to verify registration
+//pull token from api (same one from registration) and use it to verify registration
 export async function getme(token) {
-    const response = await fetch(`${USERAPI}/me`, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
-    });
-    const data = await response.json();
-    return data;
+    try {
+        const response = await fetch(`${USERAPI}/me`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error getting user:", error);
+        throw error;
+    }
 }
-    
+
 //need to make a function to post on userapi/login
 export async function loginUser(email, password) {
     try {
