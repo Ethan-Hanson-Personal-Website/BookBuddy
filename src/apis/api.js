@@ -91,15 +91,21 @@ export async function loginUser(email, password) {
 
 
 //need to make a function to GET a list of books the current user has checked out. You must pass a valid token with this request, or it will be rejected
-export async function getReservations() {
-    const response = await fetch(RESERVATIONSAPI, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-    });
-    const data = await response.json();
-    return data;
+export async function getReservations(token) {
+    try {
+        const response = await fetch(`${USERAPI}/reservations`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error getting reservations:", error);
+        throw error;
+    }
 }
 
 
