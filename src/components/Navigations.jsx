@@ -1,25 +1,15 @@
-import { Link } from "react-router-dom";
+//TODO make a navbar that has links to the following pages: Home, Books, Login, Register, Account, with books as the home page
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Navigations() {
-  return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/books">Books</Link>
-        </li>
-        <li>
-          <Link to="/account">Account</Link>
-        </li>
-      </ul>
-    </nav>
-  );
+    return (
+        <nav>
+            <Link to='/'>Home</Link>
+            <Link to='/books'>Books</Link>
+            <Link to='/login'>Login</Link>
+            <Link to='/register'>Register</Link>
+            <Link to='/account'>Account</Link>
+        </nav>
+    );
 }

@@ -36,7 +36,7 @@ export default function Account() {
 
     return (
         <div>
-            <h2>{user.firstname}'s Account</h2>
+            <h2>{user.firstname} Account</h2>
             <p>Email: {user.email}</p>
             <h3>Checked Out Books</h3>
             {reservations.map(reservation => (

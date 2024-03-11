@@ -1,26 +1,35 @@
+//TODO This is the main app function
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Books from './components/Books';
+import Singlebook from './components/Singlebook';
+import Login from './components/Login';
+import Register from './components/Register';
+import Account from './components/Account';
+import Navigations from './components/Navigations';
+import './App.css';
 
-import Navigations from './components/Navigations'
-import { Routes, Route } from 'react-router-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
-import Register from './components/Register'
-import Login from './components/Login'
-import Books from './components/Books'
-import Account from './components/Account'
-import './App.css'
-
-function App() {
-  return (
-    <Router>
-      <Navigations />
-      <Routes>
-        <Route path="/" element={<Books />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/books" element={<Books />} />
-        <Route path="/account" element={<Account />} />
-      </Routes>
-    </Router>
-  )
+export default function App() {
+    return (
+        <Router>
+            <Navigations />
+            <Switch>
+                <Route exact path='/'>
+                    <Books />
+                </Route>
+                <Route path='/books/:id'>
+                    <Singlebook />
+                </Route>
+                <Route path='/login'>
+                    <Login />
+                </Route>
+                <Route path='/register'>
+                    <Register />
+                </Route>
+                <Route path='/account'>
+                    <Account />
+                </Route>
+            </Switch>
+        </Router>
+    );
 }
-
-export default App
